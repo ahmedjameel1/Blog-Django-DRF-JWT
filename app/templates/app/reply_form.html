@@ -1,0 +1,6 @@
+<h2>Add a new reply</h2>
+<form action="{% url "article_reply" article.id %}" method="post">
+ {{ form.as_p }}
+ {% csrf_token %}
+ <p><input type="submit" value="Add reply"></p>
+</form>

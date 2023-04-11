@@ -1,0 +1,35 @@
+{% extends "app/base.html" %} {% load app_tags %}{% block title %} {{ article.subject }} {%endblock title %} {% block content %}
+<h1>{{ article.title }}</h1>
+<p class="date">Published {{ article.publish }} by {{ article.author.first_name }}</p>
+{{ article.body|markdown|linebreaks}} 
+<p>
+    <a href="{% url "article_share" article.id %}">
+    Share this article
+    </a>
+    </p>
+    <h2>Similar articles</h2>
+ {% for article in similar_articles %}
+ <p>
+ <a href="{{ article.get_absolute_url }}">{{ article.subject }}</a>
+ </p>
+ {% empty %}
+ There are no similar articles yet.
+ {% endfor %}
+{% with replies.count as total_replies %}
+ <h2>
+ {{ total_replies }} reply{{ total_replies|pluralize }}
+ </h2>
+ {% endwith %}
+ {% for reply in replies %}
+ <div class="comment">
+ <p class="info">
+ Reply {{ forloop.counter }} by {{ reply.author.username }}
+ {{ reply.created_at }}
+ </p>
+ {{ reply.body|linebreaks }}
+ </div>
+ {% empty %}
+ <p>There are no replies.</p>
+ {% endfor %}
+ {% include "app/reply_form.html" %}
+{% endblock content %}

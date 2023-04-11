@@ -1,0 +1,7 @@
+<h1>register page</h1>
+
+<form method="POST" action="">
+  {% csrf_token %}{{form}}
+  <button type="submit" class="btn btn-primary btn-block">Register</button>
+  {{ form.email.errors }} {{ form.non_field_errors }} {{form.errors}}
+</form>
